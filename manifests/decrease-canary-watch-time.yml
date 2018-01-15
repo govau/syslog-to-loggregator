@@ -1,0 +1,4 @@
+# the value from cf-deployment can be way too long during developmenet
+- type: replace
+  path: /update/canary_watch_time
+  value: "20000-60000"

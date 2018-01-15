@@ -1,0 +1,5 @@
+check process syslog_to_loggregator
+  with pidfile   /var/vcap/sys/run/syslog_to_loggregator/pid
+  start program "/var/vcap/jobs/syslog_to_loggregator/bin/ctl start"
+  stop program  "/var/vcap/jobs/syslog_to_loggregator/bin/ctl stop"
+  group vcap

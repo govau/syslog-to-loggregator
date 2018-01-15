@@ -1,0 +1,6 @@
+package: .
+import:
+- package: gopkg.in/mcuadros/go-syslog.v2
+  version: ^2.2.1
+- package: code.cloudfoundry.org/go-loggregator
+  version: ^6.0.0

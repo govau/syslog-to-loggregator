@@ -1,0 +1,65 @@
+hash: 39c79f9362570807b53e1d6aeedf1016dd3a6ae454568e7f610470f11092028d
+updated: 2018-01-15T16:14:07.390893+11:00
+imports:
+- name: code.cloudfoundry.org/go-diodes
+  version: c71ea5e735942fdbb46405ec708cb3816d1c6dbf
+- name: code.cloudfoundry.org/go-loggregator
+  version: 041998b54f880b3e5460fcc4e7d4d77742dc3d86
+  subpackages:
+  - rpc/loggregator_v2
+- name: github.com/golang/protobuf
+  version: 1e59b77b52bf8e4b449a57e6f79f21226d571845
+  subpackages:
+  - proto
+  - ptypes
+  - ptypes/any
+  - ptypes/duration
+  - ptypes/timestamp
+- name: golang.org/x/net
+  version: 5ccada7d0a7ba9aeb5d3aca8d3501b4c2a509fec
+  subpackages:
+  - context
+  - http2
+  - http2/hpack
+  - idna
+  - internal/timeseries
+  - lex/httplex
+  - trace
+- name: golang.org/x/text
+  version: e19ae1496984b1c655b8044a65c0300a3c878dd3
+  subpackages:
+  - secure/bidirule
+  - transform
+  - unicode/bidi
+  - unicode/norm
+- name: google.golang.org/genproto
+  version: a8101f21cf983e773d0c1133ebc5424792003214
+  subpackages:
+  - googleapis/rpc/status
+- name: google.golang.org/grpc
+  version: 1cd234627e6f392ade0527d593eb3fe53e832d4a
+  subpackages:
+  - balancer
+  - balancer/base
+  - balancer/roundrobin
+  - codes
+  - connectivity
+  - credentials
+  - encoding
+  - grpclb/grpc_lb_v1/messages
+  - grpclog
+  - internal
+  - keepalive
+  - metadata
+  - naming
+  - peer
+  - resolver
+  - resolver/dns
+  - resolver/passthrough
+  - stats
+  - status
+  - tap
+  - transport
+- name: gopkg.in/mcuadros/go-syslog.v2
+  version: 9cf13b7327c0e153da3cba3540c2ae2b879c3859
+testImports: []

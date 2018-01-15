@@ -1,0 +1,44 @@
+# Ops for adding our frontend proxy server from this BOSH release:
+# https://github.com/govau/frontend-boshrelease
+
+- type: replace
+  path: /releases/-
+  value:
+    name: frontend
+    url: https://github.com/govau/frontend-boshrelease/releases/download/v0.9.0/frontend-0.9.0.tgz
+    version: 0.9.0
+    sha1: 0000783b6d7342e81cc040dacdf3056339d14814
+
+# This HAProxy job sits on the same instances as the CF routers
+
+- type: replace
+  path: /instance_groups/name=router/jobs/-
+  value:
+    name: haproxy
+    release: frontend
+    properties:
+      config_bucket: "((frontend_config_bucket))"
+      default_config_object: release.tgz
+      fallback_config: |
+        frontend http
+            mode http
+            bind *:1080
+            acl acme_challenge path_beg -i /.well-known/acme-challenge/
+            http-request redirect location http://"${FE_ACME_ADDRESS}"%[capture.req.uri] code 302 if acme_challenge
+            http-request redirect scheme https code 301 unless acme_challenge
+            log global
+            option httplog
+            option http-buffer-request
+            timeout client 5s
+            timeout http-request 10s
+      env:
+        FE_ACME_ADDRESS: "((leresponder_external_hostname))"
+        FE_DOPPLER_HOST: "doppler.((system_domain)):4443"
+      # AWS load balancers currently don't support HTTP healthchecks on a TCP target group,
+      # so we signal a drain by shutting down the healthcheck port completely.
+      drain_command: "disable frontend healthcheck"
+      drain_seconds: 120
+
+- type: replace
+  path: /instance_groups/name=router/jobs/name=gorouter/properties?/router/drain_wait
+  value: 120

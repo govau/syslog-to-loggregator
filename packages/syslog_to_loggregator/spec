@@ -1,0 +1,8 @@
+---
+name: syslog_to_loggregator
+
+dependencies:
+- golang-1.9
+
+files:
+- syslog_to_loggregator/**/*.go
