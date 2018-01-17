@@ -4,14 +4,6 @@ Start a syslog server, and forward to [loggregator](https://github.com/cloudfoun
 
 Uses the [Go Client Library for Loggregator](https://github.com/cloudfoundry/go-loggregator).
 
-Notes
-https://github.com/cloudfoundry/loggregator/issues/19
-https://github.com/frodenas/syslog-to-metron
-https://github.com/cloudfoundry/bosh-hm-forwarder-release
-https://github.com/cloudfoundry-incubator/haproxy-boshrelease/issues/81
-https://github.com/jeromer/syslogparser
-syslog to file? - http://kvz.io/blog/2010/08/11/haproxy-logging/
-
 ## Usage
 
 syslog_to_loggregator is written to be colocated with a metron_agent, and uses
