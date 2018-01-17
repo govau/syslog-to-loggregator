@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 
@@ -11,31 +12,51 @@ import (
 )
 
 func main() {
-	fmt.Println("Start")
+	log.Println("Start")
+
+	var instanceIndex int
+	var metronPort int
+	var sendStartMessage bool
+	var sourceName string
+	var syslogPort int
+
+	flag.IntVar(&instanceIndex, "instance-index", -1, "Instance number for this vm e.g. 0 - required")
+	flag.IntVar(&metronPort, "metron-port", 3457, "Metron agent port")
+	flag.BoolVar(&sendStartMessage, "send-start-message", false, "Send a message on application start to loggregator. Might be useful for debugging")
+	flag.StringVar(&sourceName, "source-name", "", "Logging source name used for all logs sent to loggregator - required")
+	flag.IntVar(&syslogPort, "syslog-port", -1, "Port to start the syslog server on - required")
+	flag.Parse()
+
+	if instanceIndex < 0 {
+		log.Fatal("--instance-index is required and must be greater than 0.")
+	}
+
+	if sourceName == "" {
+		log.Fatal("--source-name is required")
+	}
+
+	if syslogPort < 0 {
+		log.Fatal("--syslog-port is required and must be greater than 0.")
+	}
 
 	// TODO is there a better type than this?
 	// See https://docs.cloudfoundry.org/devguide/deploy-apps/streaming-logs.html#format
 	SOURCE_TYPE := "RTR"
 
-	// TODO this should be the host vm router instance number
-	SOURCE_INSTANCE := "0"
+	metronAddress := fmt.Sprintf("127.0.0.1:%d", metronPort)
+	syslogServerAddress := fmt.Sprintf("127.0.0.1:%d", syslogPort)
+	log.Println("Metron address: " + metronAddress)
+	log.Println("Syslog server address: " + syslogServerAddress)
 
-	APP_ID := "haproxy"
+	err := dropsonde.Initialize(metronAddress, sourceName)
+	if err != nil {
+		log.Fatal("Could not initialize dropsonde", err)
+	}
 
-	// TODO externalise these?
-	dropsonde.Initialize("127.0.0.1:3457", APP_ID)
-
-	log.Println("Creating loggregator client")
 	client, err := v1.NewClient()
 	if err != nil {
 		log.Fatal("Could not create loggregator client", err)
 	}
-
-	fmt.Println("Sending test message to loggregator")
-	client.EmitLog("syslog_to_loggregator startup test message",
-		loggregator.WithAppInfo(APP_ID, SOURCE_TYPE, SOURCE_INSTANCE),
-		loggregator.WithStdout(),
-	)
 
 	channel := make(syslog.LogPartsChannel)
 	handler := syslog.NewChannelHandler(channel)
@@ -43,15 +64,19 @@ func main() {
 	server := syslog.NewServer()
 	server.SetFormat(syslog.RFC5424)
 	server.SetHandler(handler)
-	// default syslog port is 514, but this syslog is just for haproxy
-	//TODO externalise this
-	server.ListenUDP("0.0.0.0:515")
-	// TODO is it better to use a unix socket instead of udp if possible?
-	// https://github.com/mcuadros/go-syslog/blob/master/server.go#L102
-	fmt.Println("Starting syslog server")
+	server.ListenUDP(syslogServerAddress)
+
+	log.Println("Starting syslog server")
 	err = server.Boot()
 	if err != nil {
 		log.Fatalf("Could not start syslog server", err)
+	}
+
+	if sendStartMessage {
+		client.EmitLog("syslog_to_loggregator started",
+			loggregator.WithAppInfo(sourceName, SOURCE_TYPE, fmt.Sprint(instanceIndex)),
+			loggregator.WithStdout(),
+		)
 	}
 
 	go func(channel syslog.LogPartsChannel) {
@@ -69,14 +94,9 @@ func main() {
 			} else {
 				continue
 			}
-
-			appId := "" // TODO is this value just always the APP_ID we initialize dropsonde with??
-			if logParts["app_name"] != nil {
-				appId = logParts["app_name"].(string)
-			}
 			client.EmitLog(
 				message,
-				loggregator.WithAppInfo(appId, SOURCE_TYPE, SOURCE_INSTANCE),
+				loggregator.WithAppInfo(sourceName, SOURCE_TYPE, fmt.Sprint(instanceIndex)),
 				loggregator.WithStdout(),
 			)
 		}

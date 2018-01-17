@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-# job template binding variables
-
-# job name & index of this VM within cluster
-# e.g. NAME=redis, JOB_INDEX=0
-export NAME='<%= name %>'
-export JOB_INDEX=<%= index %>
-# full job name, like redis/0 or webapp/3
-export JOB_FULL="$NAME/$JOB_INDEX"
+export INSTANCE_INDEX=<%= index %>
+export METRON_PORT="<%= p("metron_agent.listening_port") %>"
+export SYSLOG_PORT="<%= p("syslog_to_loggregator.syslog_port") %>"
+export SOURCE_NAME="<%= p("syslog_to_loggregator.source_name") %>"

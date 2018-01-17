@@ -2,9 +2,7 @@
 
 set -eu
 
-source /var/vcap/jobs/<%= name %>/data/properties.sh
-
 # Hotfix haproxy global config to send logs to our syslog server
 #FIXME just change the config in the boshrelease/ops repo
-sed -i 's/log \/dev\/log local0/log 127.0.0.1:515 format rfc5424 local0 info/' \
+sed -i 's/log \/dev\/log local0/log 127.0.0.1:<%= p("syslog_to_loggregator.syslog_port") %> format rfc5424 local0 info/' \
   /var/vcap/jobs/haproxy/global_haproxy.cfg
