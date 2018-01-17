@@ -14,13 +14,14 @@ syslog to file? - http://kvz.io/blog/2010/08/11/haproxy-logging/
 
 ## Usage
 
-syslog_to_loggregator is written to be colocated with a metron_agent.
+syslog_to_loggregator is written to be colocated with a metron_agent, and uses
+the dropsonde protocol.
 
 ## Development
 
 You can run this locally with bosh lite and cf-deployment.
 
-In these instructions, we add a haproxy onto the router instances group which logs to our syslog server.
+In these instructions, we add haproxy onto the router instances group which logs to our syslog server.
 
 We assume all git clones occur in `~/workspace`.
 
