@@ -136,12 +136,14 @@ cf nozzle -filter LogMessage
 
 In another terminal, curl haproxy:
 
+TODO
+
 ```
-# Find the IP of the router instance
-bosh vms |grep router
+# SSH to the router instance
+bosh ssh -d cf router
 
 # GET something from haproxy
-curl -I http://IP:1080
+curl -I http://localhost:1080/foo
 ```
 
 You should now see logs for each GET request in the nozzle plugin terminal.
