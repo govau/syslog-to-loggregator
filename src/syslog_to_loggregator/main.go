@@ -51,12 +51,12 @@ func main() {
 
 	err := dropsonde.Initialize(metronAddress, sourceName)
 	if err != nil {
-		log.Fatal("Could not initialize dropsonde", err)
+		log.Fatal("Could not initialize dropsonde: ", err)
 	}
 
 	client, err := v1.NewClient()
 	if err != nil {
-		log.Fatal("Could not create loggregator client", err)
+		log.Fatal("Could not create loggregator client: ", err)
 	}
 
 	channel := make(syslog.LogPartsChannel)
@@ -70,7 +70,7 @@ func main() {
 	log.Println("Starting syslog server")
 	err = server.Boot()
 	if err != nil {
-		log.Fatalf("Could not start syslog server", err)
+		log.Fatal("Could not start syslog server: ", err)
 	}
 
 	if sendStartMessage {
@@ -81,16 +81,12 @@ func main() {
 	}
 
 	go func(channel syslog.LogPartsChannel) {
-		var message string
 		for logParts := range channel {
 			b, err := json.Marshal(logParts)
 			if err != nil {
-				log.Info("Error marshalling logParts to json", err)
+				log.Print("Error marshalling received syslog.logParts to json: ", err)
 				continue
 			}
-			// example output:
-			// Logparts: {"app_name":"haproxy","client":"127.0.0.1:39179","facility":16,"hostname":"90d47cf8-5e75-42b2-af2c-70e956e892d4","message":"127.0.0.1:44536 [16/Jan/2018:05:59:19.199] http http/\u003cNOSRV\u003e 0/-1/-1/-1/0 301 91 - - LR-- 1/1/0/0/0 0/0 \"HEAD /foo HTTP/1.1\"","msg_id":"-","priority":134,"proc_id":"74238","severity":6,"structured_data":"-","timestamp":"2018-01-16T05:59:19Z","tls_peer":"","version":1}
-
 			client.EmitLog(
 				string(b),
 				loggregator.WithAppInfo(sourceName, SOURCE_TYPE, fmt.Sprint(instanceIndex)),
