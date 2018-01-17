@@ -21,8 +21,8 @@ We assume all git clones occur in `~/workspace`.
 ### BOSH lite
 
 ```
-git clone https://github.com/cloudfoundry/bosh-deployment
-cd bosh-deployment
+git clone https://github.com/cloudfoundry/bosh-deployment ~/workspace/bosh-deployment
+cd ~/workspace/bosh-deployment
 
 # This is idempotent, so run again if needs to change
 bosh create-env ./bosh.yml \
@@ -49,8 +49,8 @@ bosh alias-env vbox -e 192.168.50.6 --ca-cert <(bosh int ./creds.yml --path /dir
 To keep it simple initially, first deploy cf-deployment:
 
 ```
-git clone https://github.com/cloudfoundry/cf-deployment
-cd cf-deployment
+git clone https://github.com/cloudfoundry/cf-deployment ~/workspace/cf-deployment
+cd ~/workspace/cf-deployment
 
 # Upload stemcell (only run if needed)
 bosh upload-stemcell "https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-$(bosh int cf-deployment.yml --path /stemcells/alias=default/version)-warden-boshlite-ubuntu-trusty-go_agent.tgz"
@@ -105,7 +105,7 @@ We add the DTA [frontend-boshrelease](https://github.com/govau/frontend-boshrele
 the router instance_groups which logs to our syslog server.
 
 ```
-
+git clone https://github.com/govau/syslog-to-loggregator-boshrelease.git ~/workspace/syslog-to-loggregator-boshrelease
 cd ~/workspace/syslog-to-loggregator-boshrelease
 bosh create-release --name=syslog_to_loggregator --force
 bosh upload-release
@@ -128,15 +128,13 @@ We can verify this using the
 Watch all log messages using the nozzle plugin:
 
 ```
-cf add-plugin-repo CF-Community http://plugins.cloudfoundry.org/
-cf install-plugin "Firehose Plugin" -r CF-Community
+cfg add-plugin-repo CF-Community http://plugins.cloudfoundry.org/
+cfg install-plugin "Firehose Plugin" -r CF-Community
 # assumes you are already logged in with the admin user
 cf nozzle -filter LogMessage
 ```
 
 In another terminal, curl haproxy:
-
-TODO
 
 ```
 # SSH to the router instance
