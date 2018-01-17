@@ -1,12 +1,40 @@
-hash: 39c79f9362570807b53e1d6aeedf1016dd3a6ae454568e7f610470f11092028d
-updated: 2018-01-15T16:14:07.390893+11:00
+hash: 6a2f8aa00e49999a5b4132b4bf8c71bf0b5ac0ee536b781a756d1f277dd20e1c
+updated: 2018-01-17T15:48:42.214388+11:00
 imports:
-- name: code.cloudfoundry.org/go-diodes
-  version: c71ea5e735942fdbb46405ec708cb3816d1c6dbf
 - name: code.cloudfoundry.org/go-loggregator
   version: 041998b54f880b3e5460fcc4e7d4d77742dc3d86
   subpackages:
   - rpc/loggregator_v2
+  - v1
+- name: github.com/cloudfoundry/dropsonde
+  version: fe07f64fd1fd25f3c920e9183edd71de6895f1d8
+  subpackages:
+  - emitter
+  - envelope_sender
+  - envelopes
+  - factories
+  - instrumented_handler
+  - instrumented_round_tripper
+  - log_sender
+  - logs
+  - metric_sender
+  - metricbatcher
+  - metrics
+  - runtime_stats
+- name: github.com/cloudfoundry/gosteno
+  version: 0c8581caea35ac903728230e447792e2365dcc34
+  subpackages:
+  - syslog
+- name: github.com/cloudfoundry/sonde-go
+  version: b33733203bb48d7c56de7cb639d77f78b0449d19
+  subpackages:
+  - events
+- name: github.com/gogo/protobuf
+  version: 160de10b2537169b5ae3e7e221d28269ef40d311
+  subpackages:
+  - gogoproto
+  - proto
+  - protoc-gen-gogo/descriptor
 - name: github.com/golang/protobuf
   version: 1e59b77b52bf8e4b449a57e6f79f21226d571845
   subpackages:
@@ -15,6 +43,14 @@ imports:
   - ptypes/any
   - ptypes/duration
   - ptypes/timestamp
+- name: github.com/mailru/easyjson
+  version: 32fa128f234d041f196a9f3e0fea5ac9772c08e1
+  subpackages:
+  - buffer
+  - jlexer
+  - jwriter
+- name: github.com/nu7hatch/gouuid
+  version: 179d4d0c4d8d407a32af483c2354df1d2c91e6c3
 - name: golang.org/x/net
   version: 5ccada7d0a7ba9aeb5d3aca8d3501b4c2a509fec
   subpackages:
@@ -62,4 +98,9 @@ imports:
   - transport
 - name: gopkg.in/mcuadros/go-syslog.v2
   version: 9cf13b7327c0e153da3cba3540c2ae2b879c3859
+  subpackages:
+  - format
+  - internal/syslogparser
+  - internal/syslogparser/rfc3164
+  - internal/syslogparser/rfc5424
 testImports: []

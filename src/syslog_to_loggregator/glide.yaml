@@ -4,3 +4,5 @@ import:
   version: ^2.2.1
 - package: code.cloudfoundry.org/go-loggregator
   version: ^6.0.0
+- package: github.com/cloudfoundry/dropsonde
+  version: ^1.0.0
