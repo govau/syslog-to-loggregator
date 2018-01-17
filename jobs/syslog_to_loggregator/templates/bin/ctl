@@ -25,6 +25,11 @@ case $1 in
 
     echo $$ > $PIDFILE
     exec chpst /var/vcap/packages/syslog_to_loggregator/bin/syslog_to_loggregator \
+      --instance-index ${INSTANCE_INDEX} \
+      --metron-port ${METRON_PORT} \
+      --send-start-message \
+      --source-name ${SOURCE_NAME} \
+      --syslog-port ${SYSLOG_PORT} \
       >>  $LOG_DIR/$JOB_NAME.stdout.log \
       2>> $LOG_DIR/$JOB_NAME.stderr.log
     ;;

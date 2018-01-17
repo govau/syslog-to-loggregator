@@ -11,4 +11,7 @@
   value:
     name: syslog_to_loggregator
     release: syslog_to_loggregator
-    properties: {}
+    properties:
+      syslog_to_loggregator:
+        source_name: haproxy
+        syslog_port: 1543
