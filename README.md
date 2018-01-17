@@ -1,13 +1,14 @@
-# syslog_to_loggregator
+# syslog_to_loggregator BOSH release
 
-Start a syslog server, and forward to [loggregator](https://github.com/cloudfoundry/loggregator).
+A BOSH release to add a syslog server which forwards logs to [loggregator](https://github.com/cloudfoundry/loggregator).
+
+Currently it's main use case is to forward logs from haproxy in the [cloud.gov.au frontend](frontend-boshrelease) to loggregator.
 
 Uses the [Go Client Library for Loggregator](https://github.com/cloudfoundry/go-loggregator).
 
 ## Usage
 
-syslog_to_loggregator is written to be colocated with a metron_agent, and uses
-the dropsonde protocol.
+This BOSH release is intended to be added to an existing instance_group and colocated with a metron_agent.
 
 ## Development
 
