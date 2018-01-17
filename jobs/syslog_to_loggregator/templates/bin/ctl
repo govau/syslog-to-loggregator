@@ -7,10 +7,12 @@ LOG_DIR=/var/vcap/sys/log/${JOB_NAME}
 JOB_DIR=/var/vcap/jobs/${JOB_NAME}
 PIDFILE=$RUN_DIR/pid
 mkdir -p $LOG_DIR
-exec >>$LOG_DIR/${JOB_NAME}.ctl.log 2>&1
+exec >>${LOG_DIR}/${JOB_NAME}.ctl.log 2>&1
 
 case $1 in
   start)
+    source /var/vcap/jobs/${JOB_NAME}/data/properties.sh
+
     mkdir -p $RUN_DIR
 
     if [[ -f $PIDFILE ]]; then
@@ -19,17 +21,10 @@ case $1 in
       rm -f $PIDFILE
     fi
 
-    echo "$(date) starting up ${JOB_NAME}"
-
-    PATH="$PATH:/var/vcap/packages/syslog_to_loggregator/bin"
-
-    export LD_LIBRARY_PATH PATH
-
-    source ${JOB_DIR}/data/properties.sh
-
     echo "$(date) syslog_to_loggregator starting up (pid $$)"
+
     echo $$ > $PIDFILE
-    exec chpst syslog_to_loggregator \
+    exec chpst /var/vcap/packages/syslog_to_loggregator/bin/syslog_to_loggregator \
       >>  $LOG_DIR/$JOB_NAME.stdout.log \
       2>> $LOG_DIR/$JOB_NAME.stderr.log
     ;;

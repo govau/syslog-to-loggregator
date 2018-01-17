@@ -2,29 +2,9 @@
 
 set -eu
 
-JOB_NAME=syslog_to_loggregator
-LOG_DIR=/var/vcap/sys/log/${JOB_NAME}
-mkdir -p ${LOG_DIR}
-
-source /var/vcap/jobs/${JOB_NAME}/data/properties.sh
-
-mkdir -p ${DATA_DIR}
+source /var/vcap/jobs/<%= name %>/data/properties.sh
 
 # Hotfix haproxy global config to send logs to our syslog server
 #FIXME just change the config in the boshrelease/ops repo
 sed -i 's/log \/dev\/log local0/log 127.0.0.1:515 format rfc5424 local0 info/' \
   /var/vcap/jobs/haproxy/global_haproxy.cfg
-
-# Write out the loggregator tls properties to disk
-
-cat <<- "_EOF_" > ${CA_CERT_PATH}
-<%= p('loggregator.tls.ca_cert') %>
-_EOF_
-
-cat <<- "_EOF_" > ${CERT_PATH}
-<%= p('loggregator.tls.metron.cert') %>
-_EOF_
-
-cat <<- "_EOF_" > ${KEY_PATH}
-<%= p('loggregator.tls.metron.key') %>
-_EOF_

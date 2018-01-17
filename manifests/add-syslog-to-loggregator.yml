@@ -11,10 +11,4 @@
   value:
     name: syslog_to_loggregator
     release: syslog_to_loggregator
-    properties:
-      loggregator:
-        tls:
-          ca_cert: ((loggregator_tls_metron.ca))
-          metron:
-            cert: ((loggregator_tls_metron.certificate))
-            key: ((loggregator_tls_metron.private_key))
+    properties: {}

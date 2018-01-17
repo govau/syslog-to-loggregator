@@ -10,11 +10,4 @@ templates:
   data/properties.sh.erb: data/properties.sh
 
 properties:
-  loggregator.tls.ca_cert:
-    description: "CA root required for key/cert verification"
-
-  loggregator.tls.metron.cert:
-    description: "TLS certificate for metron"
-
-  loggregator.tls.metron.key:
-    description: "TLS key for metron"
+  
