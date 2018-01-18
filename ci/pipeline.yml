@@ -5,6 +5,7 @@ resources:
   source:
     branch: master
     ignore_paths:
+    - .final_builds/*
     - releases/*
     private_key: {{git_private_key}}
     uri: git@github.com:govau/syslog-to-loggregator-boshrelease.git
