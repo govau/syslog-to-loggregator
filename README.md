@@ -10,6 +10,8 @@ Uses the [Go Client Library for Loggregator](https://github.com/cloudfoundry/go-
 
 This BOSH release is intended to be added to an existing instance_group and colocated with a metron_agent.
 
+You will have to configure your log source to generate syslogs formatted as [RFC5424](https://tools.ietf.org/html/rfc5424) to the UDP port specified in the [job properties](https://github.com/govau/syslog-to-loggregator-boshrelease/blob/master/jobs/syslog_to_loggregator/spec#L15).
+
 ## Development
 
 You can run this locally with bosh lite and cf-deployment.
