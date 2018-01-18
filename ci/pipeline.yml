@@ -59,6 +59,7 @@ jobs:
     params:
       access_key_id: {{boshrelease_s3_bucket_access_key_id}}
       bosh_release_name: syslog_to_loggregator
+      github_repo_name: syslog-to-loggregator-boshrelease
       secret_access_key: {{boshrelease_s3_bucket_secret_access_key}}
   - put: version
     params:
