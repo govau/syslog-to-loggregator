@@ -80,22 +80,16 @@ func main() {
 		)
 	}
 
-	go func(channel syslog.LogPartsChannel) {
-		for logParts := range channel {
-			b, err := json.Marshal(logParts)
-			if err != nil {
-				log.Print("Error marshalling received syslog.logParts to json: ", err)
-				continue
-			}
-			client.EmitLog(
-				string(b),
-				loggregator.WithAppInfo(sourceName, SOURCE_TYPE, fmt.Sprint(instanceIndex)),
-				loggregator.WithStdout(),
-			)
+	for logParts := range channel {
+		b, err := json.Marshal(logParts)
+		if err != nil {
+			log.Print("Error marshalling received syslog.logParts to json: ", err)
+			continue
 		}
-
-	}(channel)
-
-	server.Wait()
-
+		client.EmitLog(
+			string(b),
+			loggregator.WithAppInfo(sourceName, SOURCE_TYPE, fmt.Sprint(instanceIndex)),
+			loggregator.WithStdout(),
+		)
+	}
 }
