@@ -12,4 +12,4 @@ config/private.yml
 dev_releases/
 releases/**/*.tgz
 
-src/syslog_to_loggregator/build
+ci/credentials.yml
