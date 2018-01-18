@@ -13,7 +13,7 @@ properties:
   syslog_to_loggregator.source_name:
     description: "Logging source name used for all logs sent to loggregator"
   syslog_to_loggregator.syslog_port:
-    description: "Port to start the syslog server on"
+    description: "Port to start the syslog server on. Runs as non-root so must be greater than 1024."
   metron_agent.listening_port:
     description: "Port the metron agent is listening on to receive dropsonde log messages"
     default: 3457

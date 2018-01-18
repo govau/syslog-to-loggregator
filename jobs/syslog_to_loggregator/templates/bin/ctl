@@ -24,7 +24,7 @@ case $1 in
     echo "$(date) syslog_to_loggregator starting up (pid $$)"
 
     echo $$ > $PIDFILE
-    exec chpst /var/vcap/packages/syslog_to_loggregator/bin/syslog_to_loggregator \
+    exec chpst -u vcap:vcap /var/vcap/packages/syslog_to_loggregator/bin/syslog_to_loggregator \
       --instance-index ${INSTANCE_INDEX} \
       --metron-port ${METRON_PORT} \
       --send-start-message \
