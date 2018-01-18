@@ -1,14 +1,10 @@
 set -eu
 
-JOB=syslog_to_loggregator
+source /var/vcap/packages/golang-1.9-linux/bosh/compile.env
 
-export GOROOT=$(readlink -nf /var/vcap/packages/golang-1.9)
-export PATH=$GOROOT/bin:$PATH
-export GOPATH=${BOSH_COMPILE_TARGET}/${JOB}
+PACKAGE=syslog_to_loggregator
 
-mkdir -p ${BOSH_INSTALL_TARGET}/bin
+mkdir ../src && cp -a * ../src/ && mv ../src ./src
+mkdir $BOSH_INSTALL_TARGET/bin
 
-# Rename vendor to src so that we can use the parent dir as a GOPATH
-ln -s ${BOSH_COMPILE_TARGET}/${JOB}/vendor ${BOSH_COMPILE_TARGET}/${JOB}/src
-
-go build -o ${BOSH_INSTALL_TARGET}/bin/${JOB} ${BOSH_COMPILE_TARGET}/${JOB}/*.go
+go build -o $BOSH_INSTALL_TARGET/bin/${PACKAGE} src/${PACKAGE}/*.go

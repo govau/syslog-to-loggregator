@@ -1,1 +1,9 @@
+---
+blobstore:
+  provider: s3
+  options:
+    bucket_name: dta-syslog-to-loggregator-boshrelease
+    region: ap-southeast-2
+    endpoint: https://s3-ap-southeast-2.amazonaws.com
+
 name: syslog_to_loggregator
