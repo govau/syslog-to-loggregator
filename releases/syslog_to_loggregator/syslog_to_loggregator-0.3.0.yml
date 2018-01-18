@@ -1,0 +1,25 @@
+name: syslog_to_loggregator
+version: 0.3.0
+commit_hash: 0763fa4
+uncommitted_changes: false
+jobs:
+- name: syslog_to_loggregator
+  version: a327d0e72a828301e674ef3218c863a104e6ffb0
+  fingerprint: a327d0e72a828301e674ef3218c863a104e6ffb0
+  sha1: 7826f647b905aa973b88bdb24fce1a8b9b9c0ef0
+packages:
+- name: golang-1.9-linux
+  version: 200a29b129a9078cb156be44c4a792ae24f42900
+  fingerprint: 200a29b129a9078cb156be44c4a792ae24f42900
+  sha1: bacfa6a162fa7085f95df7d43e911404a3644b01
+  dependencies: []
+- name: syslog_to_loggregator
+  version: 71cc5c9e297c7fa50f00a629f9f36cb87564f64e
+  fingerprint: 71cc5c9e297c7fa50f00a629f9f36cb87564f64e
+  sha1: 1850013140d91954b2006fb6b18845874a223060
+  dependencies:
+  - golang-1.9-linux
+license:
+  version: d6fe7cfdb6a2588e8221d3a5b334f47f6f552014
+  fingerprint: d6fe7cfdb6a2588e8221d3a5b334f47f6f552014
+  sha1: 867cc0781250933a589a703c776d7e313e14d985
