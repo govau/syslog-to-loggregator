@@ -5,9 +5,9 @@
   path: /releases/-
   value:
     name: frontend
-    url: https://github.com/govau/frontend-boshrelease/releases/download/v0.9.0/frontend-0.9.0.tgz
-    version: 0.9.0
-    sha1: 0000783b6d7342e81cc040dacdf3056339d14814
+    url: https://github.com/govau/frontend-boshrelease/releases/download/v0.12.0/frontend-0.12.0.tgz
+    version: 0.12.0
+    sha1: 0c10e4ef3afb0df93ade6d6d97506faf970c699a
 
 # This HAProxy job sits on the same instances as the CF routers
 
@@ -38,6 +38,8 @@
       # so we signal a drain by shutting down the healthcheck port completely.
       drain_command: "disable frontend healthcheck"
       drain_seconds: 120
+      syslog_address: 127.0.0.1:1543
+      syslog_format: rfc5424
 
 - type: replace
   path: /instance_groups/name=router/jobs/name=gorouter/properties?/router/drain_wait
