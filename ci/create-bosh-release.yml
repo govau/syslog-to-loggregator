@@ -10,3 +10,6 @@ outputs:
 - name: github-release-info
 run:
   path: ./git/ci/create-bosh-release.sh
+params:
+  bosh_release_name:
+  github_repo_name:
