@@ -53,7 +53,6 @@ jobs:
       params:
         bump: minor
     - get: git
-      trigger: true
   - task: create-bosh-release
     file: git/ci/create-bosh-release.yml
     params:
