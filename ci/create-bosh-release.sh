@@ -37,7 +37,7 @@ EOF
     git config --global user.email "tools+concourse@digital.gov.au"
   fi
   if [[ -z $(git config --global user.name) ]]; then
-    git config --global user.name "cloud-gov-au-concourse"
+    git config --global user.name "cgabot"
   fi
 
   git add releases .final_builds
