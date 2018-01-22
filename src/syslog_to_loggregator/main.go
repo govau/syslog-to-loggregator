@@ -15,22 +15,16 @@ import (
 func main() {
 	log.Println("Start")
 
-	var instanceIndex int
 	var metronPort int
 	var sendStartMessage bool
 	var sourceName string
 	var syslogPort int
 
-	flag.IntVar(&instanceIndex, "instance-index", -1, "Instance number for this vm e.g. 0 - required")
 	flag.IntVar(&metronPort, "metron-port", 3457, "Metron agent port")
 	flag.BoolVar(&sendStartMessage, "send-start-message", false, "Send a message on application start to loggregator. Might be useful for debugging")
 	flag.StringVar(&sourceName, "source-name", "", "Logging source name used for all logs sent to loggregator - required")
 	flag.IntVar(&syslogPort, "syslog-port", -1, "Port to start the syslog server on - required")
 	flag.Parse()
-
-	if instanceIndex < 0 {
-		log.Fatal("--instance-index is required and must be greater than 0.")
-	}
 
 	if sourceName == "" {
 		log.Fatal("--source-name is required")
@@ -39,10 +33,6 @@ func main() {
 	if syslogPort < 0 {
 		log.Fatal("--syslog-port is required and must be greater than 0.")
 	}
-
-	// TODO is there a better type than this?
-	// See https://docs.cloudfoundry.org/devguide/deploy-apps/streaming-logs.html#format
-	SOURCE_TYPE := "RTR"
 
 	metronAddress := fmt.Sprintf("127.0.0.1:%d", metronPort)
 	syslogServerAddress := fmt.Sprintf("127.0.0.1:%d", syslogPort)
@@ -75,7 +65,6 @@ func main() {
 
 	if sendStartMessage {
 		client.EmitLog("syslog_to_loggregator started",
-			loggregator.WithAppInfo(sourceName, SOURCE_TYPE, fmt.Sprint(instanceIndex)),
 			loggregator.WithStdout(),
 		)
 	}
@@ -88,7 +77,6 @@ func main() {
 		}
 		client.EmitLog(
 			string(b),
-			loggregator.WithAppInfo(sourceName, SOURCE_TYPE, fmt.Sprint(instanceIndex)),
 			loggregator.WithStdout(),
 		)
 	}
