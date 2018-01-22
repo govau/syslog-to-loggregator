@@ -25,7 +25,6 @@ case $1 in
 
     echo $$ > $PIDFILE
     exec chpst -u vcap:vcap /var/vcap/packages/syslog_to_loggregator/bin/syslog_to_loggregator \
-      --instance-index ${INSTANCE_INDEX} \
       --metron-port ${METRON_PORT} \
       --send-start-message \
       --source-name ${SOURCE_NAME} \
