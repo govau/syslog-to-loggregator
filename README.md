@@ -130,8 +130,8 @@ We can verify this using the
 Watch all log messages using the nozzle plugin:
 
 ```
-cfg add-plugin-repo CF-Community http://plugins.cloudfoundry.org/
-cfg install-plugin "Firehose Plugin" -r CF-Community
+cf add-plugin-repo CF-Community http://plugins.cloudfoundry.org/
+cf install-plugin "Firehose Plugin" -r CF-Community
 # assumes you are already logged in with the admin user
 cf nozzle -filter LogMessage
 ```
